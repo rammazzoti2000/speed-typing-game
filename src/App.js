@@ -8,7 +8,13 @@ function App() {
       const { value } = event.target;
       getWord({
         value
-      })
+      });
+  }
+
+  function countWords() {
+    const wordCount = words.value.trim().split(" ").length;
+    console.log(wordCount);
+    return wordCount;
   }
 
   return (
@@ -18,7 +24,7 @@ function App() {
         <textarea value={words.value} onChange={handleChange} />
       </form>
       <h4>Time remaining: ???</h4>
-      <button>Start</button>
+      <button type="submit" onClick={() => countWords(words)}>Start</button>
       <h1>Word count: ???</h1>
     </div>
   );
