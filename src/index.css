@@ -13,14 +13,19 @@ body {
 }
 
 button {
-    font-family: 'Press Start 2P', cursive;
-    display: block;
-    margin: 0 auto;
-    border: none;
-    background: #a80020;
-    background: #00b800;
-    padding: 10px 20px;
-    text-transform: uppercase;
+  font-family: 'Press Start 2P', cursive;
+  display: block;
+  margin: 0 auto;
+  border: none;
+  background: #a80020;
+  background: #00b800;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }
 
 h1 {
@@ -37,4 +42,8 @@ textarea {
     height: 200px;
     background: #00b800;
     padding: 10px;
+}
+
+textarea:disabled {
+    background-color: #a5a2a2;
 }

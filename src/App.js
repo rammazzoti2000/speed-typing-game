@@ -2,8 +2,10 @@ import React, { useState, useEffect} from 'react';
 /* eslint-disable react-hooks/exhaustive-deps */
 
 function App() {
-  const [ words, getWord ] = useState("");
-  const [timeRemaining, setTimeRemaining] = useState(10);
+  const STARTING_TIME = 5;
+
+  const [words, getWord] = useState("");
+  const [timeRemaining, setTimeRemaining] = useState(STARTING_TIME);
   const [game, setGame] = useState(false);
   const [wordCount, setWordCount] = useState(0)
 
@@ -20,11 +22,16 @@ function App() {
     return wordValue;
   }
 
-  function gameReset() {
+  function startGame() {
     setGame(true);
-    setTimeRemaining(10)
+    setTimeRemaining(STARTING_TIME)
     getWord("")
     setWordCount(0)
+  }
+
+  function endGame() {
+    setGame(false);
+    setWordCount(countWords(words))
   }
 
   useEffect(() => {
@@ -33,8 +40,7 @@ function App() {
         setTimeRemaining(prevTime => prevTime - 1)
       }, 1000)
     } else {
-      setGame(false);
-      setWordCount(countWords(words))
+      endGame();
     }
   }, [game, timeRemaining])
 
@@ -44,13 +50,15 @@ function App() {
       <form>
         <textarea
           value={words}
+          disabled={!game}
           onChange={handleChange}
         />
       </form>
       <h4>Time remaining: {timeRemaining}</h4>
       <button
         type="submit"
-        onClick={() => gameReset()}
+        disabled={game}
+        onClick={() => startGame()}
       >
         Start
       </button>
