@@ -6,23 +6,25 @@ function App() {
   const [timeRemaining, setTimeRemaining] = useState(10);
   const [game, setGame] = useState(false);
   const [wordCount, setWordCount] = useState(0)
-  console.log(game);
 
   function handleChange(event) {
     const { value } = event.target;
-    getWord({value});
+    getWord(value);
   }
 
   function countWords(words) {
-    const wordCount = words.value ? words.value.trim().split(" ") : words;
+    const wordCount = words.trim().split(" ");
 
-    const wordValue = wordCount ? wordCount.filter(word => word !== "").length : 0;
+    const wordValue = wordCount.filter(word => word !== "").length;
     console.log(wordValue);
     return wordValue;
   }
 
-  function gameStart() {
-    setGame(!game);
+  function gameReset() {
+    setGame(true);
+    setTimeRemaining(10)
+    getWord("")
+    setWordCount(0)
   }
 
   useEffect(() => {
@@ -32,7 +34,7 @@ function App() {
       }, 1000)
     } else {
       setGame(false);
-      setWordCount(() => countWords(words))
+      setWordCount(countWords(words))
     }
   }, [game, timeRemaining])
 
@@ -40,10 +42,18 @@ function App() {
     <div className="App">
       <h1>Type Mama!!</h1>
       <form>
-        <textarea value={words.value} onChange={handleChange} />
+        <textarea
+          value={words}
+          onChange={handleChange}
+        />
       </form>
       <h4>Time remaining: {timeRemaining}</h4>
-      <button type="submit" onClick={() => gameStart()}>Start</button>
+      <button
+        type="submit"
+        onClick={() => gameReset()}
+      >
+        Start
+      </button>
       <h1>Word count: {wordCount}</h1>
     </div>
   );
