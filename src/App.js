@@ -5,6 +5,7 @@ function App() {
   const [ words, getWord ] = useState("");
   const [timeRemaining, setTimeRemaining] = useState(10);
   const [game, setGame] = useState(false);
+  const [wordCount, setWordCount] = useState(0)
   console.log(game);
 
   function handleChange(event) {
@@ -31,6 +32,7 @@ function App() {
       }, 1000)
     } else {
       setGame(false);
+      setWordCount(() => countWords(words))
     }
   }, [game, timeRemaining])
 
@@ -42,7 +44,7 @@ function App() {
       </form>
       <h4>Time remaining: {timeRemaining}</h4>
       <button type="submit" onClick={() => gameStart()}>Start</button>
-      <h1>Word count: ???</h1>
+      <h1>Word count: {wordCount}</h1>
     </div>
   );
 }
