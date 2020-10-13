@@ -24,8 +24,6 @@ function App() {
     }, 1000)
   }, [timeRemaining])
 
-
-
   return (
     <div className="App">
       <h1>Type Mama!!</h1>
