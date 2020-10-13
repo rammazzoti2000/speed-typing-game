@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function App() {
   const [ words, getWord ] = useState("");
+  const [timeRemaining, setTimeRemaining] = useState(10)
   console.log(words);
 
   function handleChange(event) {
-      const { value } = event.target;
-      getWord({
-        value
-      });
+    const { value } = event.target;
+    getWord({value});
   }
 
-  function countWords() {
-    const wordCount = words.value.trim().split(" ").length;
-    console.log(wordCount);
-    return wordCount;
+  function countWords(words) {
+    const wordCount = words.value ? words.value.trim().split(" ") : words;
+
+    const wordValue = wordCount ? wordCount.filter(word => word !== "").length : 0;
+    console.log(wordValue);
+    return wordValue;
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setTimeRemaining(prevTime => prevTime - 1)
+    }, 1000)
+  }, [timeRemaining])
+
+
 
   return (
     <div className="App">
@@ -23,7 +32,7 @@ function App() {
       <form>
         <textarea value={words.value} onChange={handleChange} />
       </form>
-      <h4>Time remaining: ???</h4>
+      <h4>Time remaining: {timeRemaining}</h4>
       <button type="submit" onClick={() => countWords(words)}>Start</button>
       <h1>Word count: ???</h1>
     </div>
