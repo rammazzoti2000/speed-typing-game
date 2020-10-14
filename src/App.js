@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 /* eslint-disable react-hooks/exhaustive-deps */
 
 function App() {
@@ -8,6 +8,7 @@ function App() {
   const [timeRemaining, setTimeRemaining] = useState(STARTING_TIME);
   const [game, setGame] = useState(false);
   const [wordCount, setWordCount] = useState(0)
+  const inputRef = useRef(null);
 
   function handleChange(event) {
     const { value } = event.target;
@@ -24,9 +25,11 @@ function App() {
 
   function startGame() {
     setGame(true);
-    setTimeRemaining(STARTING_TIME)
-    getWord("")
-    setWordCount(0)
+    setTimeRemaining(STARTING_TIME);
+    getWord("");
+    setWordCount(0);
+    inputRef.current.disabled = false;
+    inputRef.current.focus();
   }
 
   function endGame() {
@@ -52,6 +55,7 @@ function App() {
           value={words}
           disabled={!game}
           onChange={handleChange}
+          ref={inputRef}
         />
       </form>
       <h4>Time remaining: {timeRemaining}</h4>
